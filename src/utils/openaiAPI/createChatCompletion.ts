@@ -4,10 +4,10 @@ import { OPENAI_DOMAIN } from "../../constants.js";
 import { createParser } from 'eventsource-parser'
 
 export async function createChatCompletion(options: { [x: string]: any; messages?: { content: string; role: "user" | "assistant"; }[]; onMessage: (data: string) => void }) {
-  const { apiKey, onMessage, ...fetchOptions } = options;
+  const { apiKey, apiHost, onMessage, ...fetchOptions } = options;
   const authKey = apiKey ? `Bearer ${apiKey}` : '';
-
-  const response = await fetch(`${OPENAI_DOMAIN}/v1/chat/completions`, {
+  const OPENAI_BASE_URL = apiHost ? apiHost : OPENAI_DOMAIN;
+  const response = await fetch(`${OPENAI_BASE_URL}/v1/chat/completions`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: authKey,

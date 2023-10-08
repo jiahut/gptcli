@@ -36,9 +36,11 @@ export class CreateChatCompletion extends Base {
     });
 
     const apiKey = this.pipeline.env.OPENAI_API_KEY;
+    const apiHost = this.pipeline.env.OPENAI_BASE_URL;
 
     const data = await createChatCompletion({
       apiKey,
+      apiHost,
       messages: messagesWithEnv,
       onMessage: (message) => {
         stopLoading();
